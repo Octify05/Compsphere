@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>KAI Inovasi</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* Hero Section */
+    .hero {
+      height: 550px;
+      width: 100%;
+      background: url('fotoawal.jpeg.jpg') no-repeat center center/cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      position: relative;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      top:0; left:0; right:0; bottom:0;
+      background: rgba(0,0,0,0.55);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* === CHATBOT MODERN DENGAN WARNA KAI === */
+    #chatbot-container {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      width: 320px;
+      height: 450px;
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 6px 25px rgba(0,0,0,0.25);
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+
+    /* Header gradasi biru → oranye */
+    #chatbot-header {
+      background: linear-gradient(90deg, #004aad, #ff6600);
+      color: #fff;
+      font-weight: bold;
+      text-align: center;
+      padding: 14px;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    /* Area pesan */
+    #chatbot-messages {
+      flex: 1;
+      padding: 12px;
+      overflow-y: auto;
+      font-size: 14px;
+      background: #f9f9f9;
+    }
+
+    /* Bubble pesan bot */
+    .bot-message {
+      background: #eaf1ff;
+      color: #333;
+      padding: 10px 14px;
+      border-radius: 12px 12px 12px 4px;
+      margin: 6px 0;
+      max-width: 80%;
+      animation: fadeIn 0.3s ease-in-out;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    /* Bubble pesan user */
+    .user-message {
+      background: #ff6600;
+      color: #fff;
+      padding: 10px 14px;
+      border-radius: 12px 12px 4px 12px;
+      margin: 6px 0 6px auto;
+      max-width: 80%;
+      text-align: right;
+      animation: fadeIn 0.3s ease-in-out;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    /* Input area */
+    #chatbot-input-area {
+      display: flex;
+      border-top: 1px solid #ddd;
+      padding: 8px;
+      background: #fff;
+    }
+
+    #chatbot-input {
+      flex: 1;
+      padding: 10px 14px;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      outline: none;
+      font-size: 14px;
+      transition: 0.2s;
+    }
+
+    #chatbot-input:focus {
+      border-color: #004aad;
+      box-shadow: 0 0 5px rgba(0,74,173,0.4);
+    }
+
+    /* Tombol kirim */
+    #chatbot-send {
+      margin-left: 8px;
+      border: none;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #004aad, #ff6600);
+      color: #fff;
+      cursor: pointer;
+      font-size: 18px;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.3s;
+    }
+
+    #chatbot-send:hover {
+      transform: scale(1.1);
+    }
+
+    /* Tombol floating */
+    #chatbot-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, #004aad, #ff6600);
+      color: #fff;
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      transition: 0.3s;
+    }
+
+    #chatbot-toggle:hover {
+      transform: scale(1.1);
+    }
+
+    /* Animasi */
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+<header>
+  <div class="logo">
+    <img src="logo kai.png" alt="Logo KAI">
+  </div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="jadwal.html">Jadwal</a>
+    <a href="booking.html">Pesan Tiket</a>
+    <a href="tracking.html">Tracking</a>
+    <a href="login.html">Login</a>
+  </nav>
+</header>
+
+
+ <!-- Hero Section -->
+<section class="hero">
+  <div class="hero-content animate-fade">
+    <h2>Selamat Datang di PT Kereta Api Indonesia</h2>
+    <p>Melayani perjalanan Anda dengan nyaman, aman, dan tepat waktu</p>
+    <button onclick="window.location.href='booking.html'">Pesan Tiket Sekarang</button>
+  </div>
+</section>
+
+<style>
+  .hero {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: url('gallery 1.jpeg.jpg') no-repeat center center/cover;
+    position: relative;
+    color: white;
+  }
+
+  /* Overlay supaya teks lebih jelas */
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.4); /* gelap transparan */
+    z-index: 0;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+  }
+
+  .hero h2 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+  }
+
+  .hero p {
+    font-size: 1.2rem;
+    margin-bottom: 25px;
+  }
+
+  .hero button {
+    padding: 12px 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #004aad, #ff6600);
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .hero button:hover {
+    background: linear-gradient(90deg, #ff6600, #004aad);
+    transform: scale(1.05);
+  }
+</style>
+
+  <section class="about container animate-up">
+    <h2>Tentang KAI</h2>
+    <div class="about-content">
+      <div class="about-text">
+        <p>
+          PT Kereta Api Indonesia (KAI) adalah perusahaan transportasi berbasis rel terbesar di Indonesia. 
+          Sejak berdiri pada tahun 1945, KAI terus bertransformasi menghadirkan <b>layanan modern, aman, dan ramah lingkungan</b> bagi masyarakat.
+        </p>
+        <p>
+          Dengan jaringan yang luas dari Sabang hingga Merauke, KAI berkomitmen menjadi mitra perjalanan Anda 
+          menuju <b>masa depan transportasi yang nyaman dan berkelanjutan</b>.
+        </p>
+        <button onclick="window.location.href='jadwal.html'">Lihat Jadwal Kereta</button>
+      </div>
+      <div class="about-image">
+        <img src="379a8a1b1faa600d4efca0967e9b7cd4.jpeg" alt="Kereta Api Indonesia">
+      </div>
+    </div>
+  </section>
+
+
+ <section class="container animate-up">
+  <h2>🎉 Promo Tiket</h2>
+  <div class="promo-slider">
+    <div class="slide-track">
+
+      <!-- Promo Hari Raya -->
+      <div class="promo-card flash-sale">
+        <div class="badge">🌙 Lebaran</div>
+        <img src="Promo-KAI-Silaturrahmi-Lebaran.jpg" alt="Promo 1">
+        <div class="info">
+          <h3>Promo Hari Raya Idul Fitri</h3>
+          <p><b>Potongan 25%</b></p>
+          <p class="desc">Nikmati mudik nyaman dan hemat dengan promo spesial 4 - 11 April.</p>
+          <button onclick="window.location.href='booking.html'">Pesan Sekarang</button>
+        </div>
+      </div>
+
+      <!-- Promo Natal -->
+      <div class="promo-card flash-sale">
+        <div class="badge">🎄 Natal</div>
+        <img src="promo-nataru.webp" alt="Promo 2">
+        <div class="info">
+          <h3>Promo Natal</h3>
+          <p><b>Cashback Rp 25.000</b></p>
+          <p class="desc">Rayakan Natal bersama keluarga dengan cashback spesial dari KAI.</p>
+          <button onclick="window.location.href='booking.html'">Pesan Sekarang</button>
+        </div>
+      </div>
+
+      <!-- Promo Tahun Baru -->
+      <div class="promo-card flash-sale">
+        <div class="badge">🎆 Tahun Baru</div>
+        <img src="Promo-KAI-Tahun-Baru-2025-rweg (2).jpg" alt="Promo 3">
+        <div class="info">
+          <h3>Promo Tahun Baru</h3>
+          <p><b>Diskon hingga 30%</b></p>
+          <p class="desc">Awali tahun baru dengan perjalanan hemat dan nyaman!</p>
+          <button onclick="window.location.href='booking.html'">Pesan Sekarang</button>
+        </div>
+      </div>
+
+      <!-- Flash Sale -->
+      <div class="promo-card flash-sale">
+        <div class="badge">⚡ Flash Sale</div>
+        <img src="kereta.jpg" alt="Argo Wilis">
+        <div class="info">
+          <h3>Argo Wilis</h3>
+          <p><b>Harga Spesial Rp 75.000</b></p>
+          <p class="desc">Nikmati perjalanan Bandung - Surabaya dengan harga hemat!</p>
+          <button onclick="window.location.href='booking.html'">Pesan Sekarang</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+  <!-- Model Kereta -->
+<section class="container animate-up">
+  <h2>🚆 Model Kereta</h2>
+  <div class="models">
+    
+    <!-- Argo Parahyangan -->
+    <div class="card">
+      <a href="argo-parahyangan.html" style="text-decoration:none; color:inherit;">
+        <img src="argo parahayangan.jpg" alt="Argo Parahyangan">
+        <p><b>Argo Parahyangan</b></p>
+      </a>
+    </div>
+    
+    <!-- Argo Wilis -->
+    <div class="card">
+      <a href="argo-wilis.html" style="text-decoration:none; color:inherit;">
+        <img src="argo wilis.jpg" alt="Argo Wilis">
+        <p><b>Argo Wilis</b></p>
+      </a>
+    </div>
+    
+    <!-- Taksaka -->
+    <div class="card">
+      <a href="taksaka.html" style="text-decoration:none; color:inherit;">
+        <img src="taksaka.jpeg" alt="Taksaka">
+        <p><b>Taksaka</b></p>
+      </a>
+    </div>
+
+  </div>
+</section>
+<!-- Hubungi Kami -->
+  <section class="container animate-up" id="hubungi">
+    <h2>📞 Hubungi Kami</h2>
+    <div class="contact-info" style="background:#fff; padding:20px; border-radius:15px; box-shadow:0 4px 15px rgba(0,0,0,0.1); max-width:800px; margin:auto; text-align:center;">
+      <p><b>Alamat:</b> Jl. Perintis Kemerdekaan No.1, Babakan Ciamis, Kec. Sumur Bandung, Kota Bandung, Jawa Barat 40117</p>
+      <p><b>Telepon:</b> 021-121</p>
+      <div class="social-links" style="margin-top:15px;">
+        <a href="https://www.facebook.com/CCKAI121?rdid=w4xXaEw5VDTSzIEg&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1LxrhwS1D7%2F#" target="_blank" style="margin:0 0px;">
+          <img src="facebook.svg" alt="Facebook" style="width:32px; height:32px;">
+        </a>
+        <a href="https://www.instagram.com/keretaapikita/?utm_source=ig_web_button_share_sheet&igsh=bTN6bTgzZmtrdmo1#" target="_blank" style="margin:0 0px;">
+          <img src="instagram-removebg-preview.png" alt="Instagram" style="width:32px; height:32px;">
+        </a>
+        <a href="https://x.com/KAI121" target="_blank" style="margin:0 0px;">
+          <img src="x.png" alt="X" style="width:32px; height:32px;">
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>© 2025 KAI Inovasi</footer>
+
+  <!-- === Chatbot === -->
+<div id="chatbot-container">
+  <div id="chatbot-header">💬 KAI Assistant</div>
+  <div id="chatbot-messages"></div>
+  <div id="chatbot-input-area">
+    <input type="text" id="chatbot-input" placeholder="Tulis pertanyaan Anda..." />
+    <button id="chatbot-send">➤</button>
+  </div>
+</div>
+
+<!-- Tombol Floating -->
+<div id="chatbot-toggle">💬</div>
+
+</style>
+
+  <!-- Script Chatbot -->
+  <script src="script.js"></script>
+</body>
+</html>

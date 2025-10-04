@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Pesan Tiket - KAI Inovasi</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #004aad, #ff9800);
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    header {
+      background: white;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    header img { height: 50px; }
+    header nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #004aad;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+
+    h2 {
+      text-align: center;
+      color: #004aad;
+      margin-bottom: 20px;
+    }
+
+    label { font-weight: bold; margin-top: 10px; display: block; }
+
+    select, input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0 15px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
+
+    .btn {
+      background: #ff9800;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-top: 10px;
+    }
+    .btn:hover { background: #e68900; }
+
+    .train-info {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 10px;
+      background: #f9f9f9;
+      border-left: 6px solid #004aad;
+    }
+
+    .kelas {
+      display: flex;
+      gap: 15px;
+      margin-top: 10px;
+    }
+
+    .kelas div {
+      flex: 1;
+      padding: 10px;
+      border-radius: 10px;
+      background: #e3f2fd;
+      cursor: pointer;
+      transition: 0.3s;
+      text-align: center;
+    }
+
+    .kelas div:hover {
+      background: #bbdefb;
+      transform: scale(1.05);
+    }
+
+    .kelas div.selected {
+      border: 3px solid #ff9800;
+      background: #fff3e0;
+    }
+
+    .link-denah {
+      margin-top: 10px;
+      display: block;
+      text-align: right;
+      font-size: 14px;
+    }
+
+    .link-denah a {
+      color: #004aad;
+      font-weight: bold;
+      text-decoration: none;
+    }
+    .link-denah a:hover { text-decoration: underline; }
+
+    .passenger-card {
+      margin-top: 15px;
+      padding: 15px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      border-left: 4px solid #004aad;
+    }
+    .passenger-card input { margin: 5px 0; }
+    .passenger-card button {
+      background: red;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <header>
+    <img src="logo kai.png" alt="Logo KAI">
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="jadwal.html">Jadwal</a>
+      <a href="booking.html">Pesan Tiket</a>
+      <a href="tracking.html">Tracking</a>
+      <a href="login.html">Login</a>
+    </nav>
+  </header>
+
+  <!-- Form Pemesanan -->
+<div class="container">
+  <h2>🚆 Pemesanan Tiket Kereta Api</h2>
+
+  <!-- Kota Asal & Tujuan -->
+  <label for="asal">Kota Asal</label>
+  <select id="asal">
+    <option value="">-- Pilih Kota Asal --</option>
+    <option>Bandung</option>
+    <option>Jakarta (Gambir)</option>
+    <option>Surabaya Gubeng</option>
+    <option>Yogyakarta</option>
+  </select>
+
+  <label for="tujuan">Kota Tujuan</label>
+  <select id="tujuan">
+    <option value="">-- Pilih Kota Tujuan --</option>
+    <option>Bandung</option>
+    <option>Jakarta (Gambir)</option>
+    <option>Surabaya Gubeng</option>
+    <option>Yogyakarta</option>
+  </select>
+
+  <label for="tanggal">Tanggal Berangkat</label>
+  <input type="date" id="tanggal">
+
+  <label for="jam">Jam Keberangkatan</label>
+  <select id="jam">
+    <option value="06:00">06:00</option>
+    <option value="09:00">09:00</option>
+    <option value="12:00">12:00</option>
+    <option value="15:00">15:00</option>
+    <option value="18:00">18:00</option>
+  </select>
+
+  <!-- Pilih Kereta -->
+  <div id="hasilKereta"></div>
+
+  <!-- Checkbox Tiket Disabilitas -->
+  <hr>
+  <label>
+    <input type="checkbox" id="disabilitas" onchange="toggleDisabilitas(this)">
+    ♿ Pesan Tiket Khusus Penyandang Disabilitas (Gerbong 7 & 8)
+  </label>
+  <div id="infoDisabilitas"></div>
+
+  <hr>
+  <!-- Checkbox gunakan akun login -->
+  <label>
+    <input type="checkbox" id="useAccount" checked>
+    Gunakan data akun login sebagai pemesan utama
+  </label>
+
+  <!-- Form penumpang -->
+  <div id="passengerForm"></div>
+
+  <button class="btn" onclick="addPassenger()">Tambah Penumpang</button>
+  <button class="btn" onclick="lanjutPembayaran()">Lanjut ke Pembayaran</button>
+</div>
+
+
+<script>
+let keretaDipilih = null, kelasDipilih = null;
+let passengers = [];
+
+// Data rute kereta
+const ruteKereta = {
+  "Argo Wilis": [
+    "Bandung", "Cipeundeuy", "Tasikmalaya", "Ciamis", "Banjar", "Kroya", 
+    "Kutoarjo", "Yogyakarta", "Solo Balapan", "Madiun", "Kertosono", 
+    "Jombang", "Mojokerto", "Surabaya Gubeng"
+  ],
+  "Argo Parahyangan": [
+    "Gambir", "Purwakarta", "Cimahi", "Bandung"
+  ],
+  "Taksaka": [
+    "Yogyakarta", "Kutoarjo", "Kebumen", "Purwokerto", 
+    "Cirebon", "Jatinegara", "Gambir"
+  ]
+};
+
+const asal = document.getElementById('asal');
+const tujuan = document.getElementById('tujuan');
+const hasilKereta = document.getElementById('hasilKereta');
+
+function tampilkanKereta() {
+  // Jangan tampilkan jika disabilitas dipilih
+  if (document.getElementById("disabilitas").checked) return;
+
+  hasilKereta.innerHTML = "";
+  if (!asal.value || !tujuan.value) return;
+
+  let kereta = "";
+
+  if ((asal.value === "Bandung" && tujuan.value === "Surabaya Gubeng") || 
+      (asal.value === "Surabaya Gubeng" && tujuan.value === "Bandung")) {
+    kereta = "Argo Wilis";
+  } else if ((asal.value === "Bandung" && tujuan.value === "Jakarta (Gambir)") || 
+             (asal.value === "Jakarta (Gambir)" && tujuan.value === "Bandung")) {
+    kereta = "Argo Parahyangan";
+  } else if ((asal.value.includes("Gambir") && tujuan.value === "Yogyakarta") || 
+             (asal.value === "Yogyakarta" && tujuan.value.includes("Gambir"))) {
+    kereta = "Taksaka";
+  }
+
+  if (kereta) {
+    let ruteList = ruteKereta[kereta].join(" → ");
+
+    hasilKereta.innerHTML = `
+      <div class="train-info">
+        <h3>${kereta}</h3>
+        <p><b>Rute:</b> ${asal.value} - ${tujuan.value}</p>
+        <p><b>Lintasan:</b> ${ruteList}</p>
+        <p>Pilih kelas:</p>
+        <div class="kelas">
+          <div onclick="pilihKelas('Ekonomi', 120000, '${kereta}', event)">Ekonomi<br>Rp 120.000</div>
+          <div onclick="pilihKelas('Bisnis', 200000, '${kereta}', event)">Bisnis<br>Rp 200.000</div>
+          <div onclick="pilihKelas('Eksekutif', 300000, '${kereta}', event)">Eksekutif<br>Rp 300.000</div>
+        </div>
+        <div class="link-denah">
+          <a href="denah_${kereta.toLowerCase().replace(' ','')}.html" target="_blank">Lihat Denah Kursi</a>
+        </div>
+      </div>
+    `;
+  } else {
+    hasilKereta.innerHTML = `<p style="color:red;">Tidak ada kereta tersedia untuk rute ini.</p>`;
+  }
+}
+
+asal.addEventListener("change", tampilkanKereta);
+tujuan.addEventListener("change", tampilkanKereta);
+
+// Pilih kelas
+function pilihKelas(kelas, harga, kereta, event) {
+  kelasDipilih = { kelas, harga };
+  keretaDipilih = kereta;
+
+  document.querySelectorAll(".kelas div").forEach(el => el.classList.remove("selected"));
+  event.target.classList.add("selected");
+
+  localStorage.setItem("keretaDipilih", kereta);
+  localStorage.setItem("kelasDipilih", kelas);
+  localStorage.setItem("hargaTiket", harga);
+}
+
+// Penumpang & login data
+window.onload = () => {
+  const userData = JSON.parse(localStorage.getItem("userData"));
+  if (userData && document.getElementById("useAccount").checked) {
+    addPassenger(userData.username, userData.email, userData.phone, true);
+  }
+};
+
+document.getElementById("useAccount").addEventListener("change", function() {
+  if (this.checked) {
+    const userData = JSON.parse(localStorage.getItem("userData"));
+    if (userData) addPassenger(userData.username, userData.email, userData.phone, true);
+  } else {
+    passengers = passengers.filter(p => !p.isAccount);
+    renderPassengers();
+  }
+});
+
+function addPassenger(name="", email="", phone="", isAccount=false) {
+  passengers.push({ name, email, phone, isAccount });
+  renderPassengers();
+}
+
+function renderPassengers() {
+  const form = document.getElementById("passengerForm");
+  form.innerHTML = "";
+  passengers.forEach((p, i) => {
+    form.innerHTML += `
+      <div class="passenger-card">
+        <h4>Penumpang ${i+1} ${p.isAccount ? "(Akun Login)" : ""}</h4>
+        <input type="text" value="${p.name}" placeholder="Nama Lengkap" onchange="updatePassenger(${i}, 'name', this.value)">
+        <input type="email" value="${p.email}" placeholder="Email" onchange="updatePassenger(${i}, 'email', this.value)">
+        <input type="tel" value="${p.phone}" placeholder="No. HP" onchange="updatePassenger(${i}, 'phone', this.value)">
+        ${p.isAccount ? "" : `<button onclick="removePassenger(${i})">Hapus</button>`}
+      </div>
+    `;
+  });
+}
+
+function updatePassenger(index, field, value) {
+  passengers[index][field] = value;
+}
+
+function removePassenger(index) {
+  passengers.splice(index, 1);
+  renderPassengers();
+}
+
+// Tiket Disabilitas
+function toggleDisabilitas(cb) {
+  const info = document.getElementById("infoDisabilitas");
+  if (cb.checked) {
+    keretaDipilih = "Gerbong Khusus Disabilitas";
+    kelasDipilih = { kelas: "Disabilitas", harga: 100000 };
+
+    localStorage.setItem("keretaDipilih", "Tiket Disabilitas");
+    localStorage.setItem("kelasDipilih", "Disabilitas");
+    localStorage.setItem("hargaTiket", 100000);
+
+    info.innerHTML = `
+      <div class="train-info">
+        <h3>♿ Tiket Khusus Disabilitas</h3>
+        <p>Gerbong tersedia: 7 & 8</p>
+        <p>Harga flat: Rp 100.000</p>
+        <a href="denah_disabilitas.html" target="_blank">Lihat Denah Kursi Disabilitas</a>
+      </div>
+    `;
+
+    // Sembunyikan pilihan kereta biasa
+    hasilKereta.innerHTML = "";
+  } else {
+    info.innerHTML = "";
+    tampilkanKereta();
+  }
+}
+
+function lanjutPembayaran() {
+  if (!keretaDipilih || !kelasDipilih) {
+    alert("Silakan pilih kereta atau tiket disabilitas terlebih dahulu!");
+    return;
+  }
+
+  localStorage.setItem("passengers", JSON.stringify(passengers));
+  localStorage.setItem("asal", asal.value);
+  localStorage.setItem("tujuan", tujuan.value);
+  localStorage.setItem("tanggal", document.getElementById("tanggal").value);
+  localStorage.setItem("jam", document.getElementById("jam").value);
+
+  window.location.href = "pembayaran.html";
+}
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Denah Kursi - Argo Parahyangan</title>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; background: #f4f6f9; padding: 20px; text-align: center; }
+    h2 { color: #004aad; }
+    .coach {
+      display: grid;
+      grid-template-columns: repeat(4, 55px);
+      gap: 10px;
+      justify-content: center;
+      margin: 20px auto;
+      max-width: 400px;
+    }
+    .seat {
+      width: 55px; height: 55px;
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+      font-weight: bold; cursor: pointer; transition: 0.3s;
+    }
+    .ekonomi { background: #ffe082; }
+    .bisnis { background: #80deea; }
+    .eksekutif { background: #a5d6a7; }
+    .prioritas { background: #ef5350; color: white; }
+    .selected { border: 3px solid #ff9800; transform: scale(1.1); }
+    .booked { background: #bdbdbd !important; color: white; cursor: not-allowed; }
+    .disabled { opacity: 0.4; cursor: not-allowed; }
+    .legend { display: flex; justify-content: center; gap: 15px; margin-top: 20px; }
+    .legend span { display: flex; align-items: center; gap: 5px; font-size: 14px; }
+    .legend-box { width: 20px; height: 20px; border-radius: 5px; display: inline-block; }
+    #info { margin-top: 20px; font-size: 18px; font-weight: bold; }
+    button {
+      margin-top: 20px; padding: 10px 20px; border: none; border-radius: 8px;
+      background: #ff9800; color: white; font-size: 16px; cursor: pointer; transition: 0.3s;
+    }
+    button:hover { background: #e68900; }
+  </style>
+</head>
+<body>
+  <h2>Denah Kursi - Argo Parahyangan</h2>
+  <p>Klik kursi untuk memilih tempat duduk Anda.</p>
+
+  <div class="coach">
+    <!-- Baris 1 -->
+    <div class="seat prioritas">1A</div>
+    <div class="seat prioritas">1B</div>
+    <div class="seat eksekutif">1C</div>
+    <div class="seat eksekutif">1D</div>
+
+    <!-- Baris 2 -->
+    <div class="seat eksekutif">2A</div>
+    <div class="seat eksekutif">2B</div>
+    <div class="seat eksekutif">2C</div>
+    <div class="seat eksekutif">2D</div>
+
+    <!-- Baris 3 -->
+    <div class="seat bisnis">3A</div>
+    <div class="seat bisnis">3B</div>
+    <div class="seat bisnis">3C</div>
+    <div class="seat bisnis">3D</div>
+
+    <!-- Baris 4 -->
+    <div class="seat ekonomi">4A</div>
+    <div class="seat ekonomi">4B</div>
+    <div class="seat ekonomi">4C</div>
+    <div class="seat ekonomi">4D</div>
+  </div>
+
+  <div class="legend">
+    <span><span class="legend-box" style="background:#ffe082"></span> Ekonomi</span>
+    <span><span class="legend-box" style="background:#80deea"></span> Bisnis</span>
+    <span><span class="legend-box" style="background:#a5d6a7"></span> Eksekutif</span>
+    <span><span class="legend-box" style="background:#ef5350"></span> Prioritas</span>
+  </div>
+
+  <div id="info">Belum ada kursi yang dipilih.</div>
+  <button onclick="lanjutkan()">Lanjutkan</button>
+
+  <script>
+    const seats = document.querySelectorAll('.seat');
+    let selectedSeat = null;
+
+    // Ambil kelas dipilih dari localStorage
+    const kelasDipilih = localStorage.getItem("kelasDipilih");
+
+    // Nonaktifkan kursi yang bukan kelasDipilih
+    seats.forEach(seat => {
+      if (!seat.classList.contains(kelasDipilih.toLowerCase())) {
+        seat.classList.add("disabled");
+      }
+    });
+
+    // Event klik hanya berlaku untuk kursi sesuai kelasDipilih
+    seats.forEach(seat => {
+      seat.addEventListener('click', () => {
+        if (seat.classList.contains('booked') || seat.classList.contains('disabled')) return;
+        if (selectedSeat) selectedSeat.classList.remove('selected');
+        seat.classList.add('selected');
+        selectedSeat = seat;
+        document.getElementById('info').innerText = "Kursi dipilih: " + seat.textContent;
+      });
+    });
+
+    function lanjutkan() {
+      if (!selectedSeat) { alert("Silakan pilih kursi terlebih dahulu!"); return; }
+      localStorage.setItem("kursiDipilih", selectedSeat.textContent);
+      alert("Kursi " + selectedSeat.textContent + " berhasil dipilih! Lanjut ke pembayaran.");
+      window.location.href = "pembayaran.html";
+    }
+  </script>
+</body>
+</html>

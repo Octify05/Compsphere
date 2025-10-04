@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Taksaka - KAI Inovasi</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .hero-train {
+      height: 400px;
+      background: url('taksaka.jpeg') no-repeat center center/cover;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+    .hero-train::after {
+      content: '';
+      position: absolute;
+      top:0; left:0; right:0; bottom:0;
+      background: rgba(0,0,0,0.5);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+    .train-info {
+      max-width: 900px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+    .train-info h2 {
+      color: #004aad;
+      margin-bottom: 15px;
+    }
+    .btn-pesan {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 20px;
+      background: #ff9800;
+      color: white;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    .btn-pesan:hover {
+      background: #e68900;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <header>
+    <div class="logo">
+      <img src="logokai.png" alt="Logo KAI">
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="jadwal.html">Jadwal</a>
+      <a href="booking.html">Pesan Tiket</a>
+      <a href="tracking.html">Tracking</a>
+      <a href="login.html">Login</a>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero-train">
+    <div class="hero-content">
+      <h1>Kereta Taksaka</h1>
+      <p>Kenyamanan premium Yogyakarta – Jakarta</p>
+    </div>
+  </section>
+
+  <!-- Info -->
+  <div class="train-info">
+    <h2>Tentang Kereta Taksaka</h2>
+    <p>
+      Kereta Taksaka adalah layanan kelas eksekutif yang menghubungkan Yogyakarta – Jakarta. 
+      Kereta ini terkenal dengan jadwal yang cepat, kenyamanan, dan layanan berkelas tinggi.
+    </p>
+    <p>
+      Penumpang Taksaka akan dimanjakan dengan kursi yang luas dan ergonomis, AC modern, sistem hiburan, stopkontak di kursi, 
+      serta layanan makanan. Kereta ini menjadi favorit bagi pebisnis maupun wisatawan.
+    </p>
+    <a href="booking.html" class="btn-pesan">Pesan Tiket Sekarang</a>
+  </div>
+
+  <footer>© 2025 KAI Inovasi</footer>
+</body>
+</html>

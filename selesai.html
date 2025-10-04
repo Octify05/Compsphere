@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Pembayaran Selesai - KAI Inovasi</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #004aad, #ff6600);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: #333;
+    }
+
+    .success-container {
+      background: #fff;
+      padding: 40px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      max-width: 500px;
+      width: 100%;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .success-container img {
+      width: 80px;
+      margin-bottom: 20px;
+    }
+
+    .success-container h2 {
+      color: #004aad;
+      margin-bottom: 15px;
+    }
+
+    .ticket-info {
+      text-align: left;
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .ticket-info p {
+      margin: 8px 0;
+    }
+
+    .btn {
+      padding: 12px 20px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 15px;
+      transition: background 0.3s;
+      margin: 5px;
+    }
+
+    .btn.primary {
+      background: #ff6600;
+      color: white;
+    }
+
+    .btn.primary:hover {
+      background: #e65c00;
+    }
+
+    .btn.secondary {
+      background: #004aad;
+      color: white;
+    }
+
+    .btn.secondary:hover {
+      background: #003580;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    #qrcode {
+      display: none; /* disembunyikan, hanya dipakai untuk generate */
+    }
+  </style>
+</head>
+<body>
+  <div class="success-container">
+    <img src="logo kai.png" alt="Logo KAI">
+    <h2>✅ Pembayaran Berhasil!</h2>
+    <p>Terima kasih telah memesan tiket di <b>KAI Inovasi</b>. Berikut detail perjalanan Anda:</p>
+
+    <div class="ticket-info" id="ticket-info">
+  <p><b>Kode Booking (PNR):</b> <span id="pnr"></span></p>
+  <p><b>Nama Penumpang:</b> <span id="nama"></span></p>
+  <p><b>Kereta:</b> <span id="kereta"></span></p>
+  <p><b>Rute:</b> <span id="asal"></span> → <span id="tujuan"></span></p>
+  <p><b>Kelas:</b> <span id="kelas"></span></p>
+  <p><b>Kursi:</b> <span id="kursi"></span></p>
+  <p><b>Tanggal & Jam:</b> <span id="tanggal"></span> <span id="jam"></span></p>
+  <p><b>Total Bayar:</b> Rp <span id="totalBayar"></span></p>
+</div>
+
+
+    <button class="btn primary" onclick="window.location.href='index.html'">Kembali ke Beranda</button>
+    <button class="btn secondary" onclick="downloadPDF()">Download E-Tiket (PDF)</button>
+  </div>
+
+  <!-- QRCode hidden div -->
+  <div id="qrcode"></div>
+
+  <script>
+    // Ambil data dari localStorage
+    const nama = localStorage.getItem("nama") || "-";
+    const tujuan = localStorage.getItem("tujuan") || "-";
+    const kelas = localStorage.getItem("kelas") || "-";
+    const tanggal = localStorage.getItem("tanggal") || "-";
+    const totalBayar = parseInt(localStorage.getItem("totalBayar") || localStorage.getItem("harga") || 0);
+
+    document.getElementById("nama").innerText = nama;
+    document.getElementById("tujuan").innerText = tujuan;
+    document.getElementById("kelas").innerText = kelas;
+    document.getElementById("tanggal").innerText = tanggal;
+    document.getElementById("totalBayar").innerText = totalBayar.toLocaleString("id-ID");
+
+    // Generate QRCode (isi QR = data tiket)
+    const qrData = `KAI E-Tiket\nNama: ${nama}\nTujuan: ${tujuan}\nKelas: ${kelas}\nTanggal: ${tanggal}\nTotal: Rp ${totalBayar.toLocaleString("id-ID")}`;
+    new QRCode(document.getElementById("qrcode"), {
+      text: qrData,
+      width: 150,
+      height: 150
+    });
+
+    // Fungsi download PDF
+    function downloadPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      doc.setFont("helvetica","bold");
+      doc.setFontSize(18);
+      doc.text("E-Tiket KAI Inovasi", 70, 20);
+
+      doc.setFontSize(12);
+      doc.setFont("helvetica","normal");
+      doc.text("Nama Penumpang : " + nama, 20, 40);
+      doc.text("Tujuan         : " + tujuan, 20, 50);
+      doc.text("Kelas          : " + kelas, 20, 60);
+      doc.text("Tanggal        : " + tanggal, 20, 70);
+      doc.text("Total Bayar    : Rp " + totalBayar.toLocaleString("id-ID"), 20, 80);
+
+      // Ambil QR Code dari canvas -> ke PDF
+      const qrCanvas = document.querySelector("#qrcode canvas");
+      const qrImg = qrCanvas.toDataURL("image/png");
+      doc.addImage(qrImg, "PNG", 140, 40, 50, 50);
+
+      doc.setFontSize(10);
+      doc.text("Dicetak dari KAI Inovasi - " + new Date().toLocaleString("id-ID"), 20, 110);
+
+      doc.save("E-Tiket-KAI.pdf");
+    }
+  </script>
+</body>
+</html>

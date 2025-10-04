@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Denah Kursi Disabilitas - Gerbong 7 & 8</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #004aad, #ff9800);
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      width: 100%;
+      padding: 15px;
+      text-align: center;
+      background: white;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    header h2 {
+      margin: 0;
+      color: #004aad;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 25px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+      width: 90%;
+    }
+
+    h3 {
+      margin-top: 0;
+      color: #ff9800;
+    }
+
+    .gerbong {
+      margin-bottom: 40px;
+    }
+
+    .coach {
+      display: grid;
+      grid-template-columns: repeat(4, 60px);
+      gap: 12px;
+      justify-content: center;
+      margin: 20px auto;
+      max-width: 400px;
+    }
+
+    .seat {
+      width: 60px;
+      height: 60px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+      background: #b3e5fc;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+    }
+
+    .seat:hover {
+      background: #81d4fa;
+      transform: scale(1.05);
+    }
+
+    .selected {
+      background: #ff9800 !important;
+      color: white;
+      transform: scale(1.1);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .booked {
+      background: #bdbdbd !important;
+      cursor: not-allowed;
+      color: white;
+    }
+
+    .legend {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin: 20px 0;
+      font-size: 14px;
+    }
+
+    .legend-box {
+      width: 20px;
+      height: 20px;
+      border-radius: 5px;
+      display: inline-block;
+      margin-right: 6px;
+    }
+
+    #info {
+      margin-top: 15px;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+      color: #004aad;
+    }
+
+    button {
+      margin: 20px auto;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 10px;
+      background: #ff9800;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+      display: block;
+    }
+    button:hover {
+      background: #e68900;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h2>♿ Denah Kursi Disabilitas</h2>
+    <p>Gerbong 7 & 8 khusus penyandang disabilitas</p>
+  </header>
+
+  <div class="container">
+    <!-- Gerbong 7 -->
+    <div class="gerbong">
+      <h3>Gerbong 7</h3>
+      <div class="coach" id="gerbong7">
+        <!-- Kursi 7A-7H (2x4) -->
+        <div class="seat">7A</div>
+        <div class="seat">7B</div>
+        <div class="seat">7C</div>
+        <div class="seat">7D</div>
+        <div class="seat">7E</div>
+        <div class="seat">7F</div>
+        <div class="seat">7G</div>
+        <div class="seat">7H</div>
+      </div>
+    </div>
+
+    <!-- Gerbong 8 -->
+    <div class="gerbong">
+      <h3>Gerbong 8</h3>
+      <div class="coach" id="gerbong8">
+        <!-- Kursi 8A-8H (2x4) -->
+        <div class="seat">8A</div>
+        <div class="seat">8B</div>
+        <div class="seat">8C</div>
+        <div class="seat">8D</div>
+        <div class="seat">8E</div>
+        <div class="seat">8F</div>
+        <div class="seat">8G</div>
+        <div class="seat">8H</div>
+      </div>
+    </div>
+
+    <div class="legend">
+      <span><span class="legend-box" style="background:#b3e5fc"></span> Tersedia</span>
+      <span><span class="legend-box" style="background:#ff9800"></span> Dipilih</span>
+      <span><span class="legend-box" style="background:#bdbdbd"></span> Sudah Dipesan</span>
+    </div>
+
+    <div id="info">Belum ada kursi yang dipilih.</div>
+    <button onclick="lanjutkan()">Lanjutkan</button>
+  </div>
+
+  <script>
+    const seats = document.querySelectorAll('.seat');
+    let selectedSeat = null;
+
+    seats.forEach(seat => {
+      seat.addEventListener('click', () => {
+        if (seat.classList.contains('booked')) return;
+
+        if (selectedSeat) selectedSeat.classList.remove('selected');
+        seat.classList.add('selected');
+        selectedSeat = seat;
+
+        document.getElementById('info').innerText = 
+          "Kursi dipilih: " + seat.textContent;
+      });
+    });
+
+    function lanjutkan() {
+      if (!selectedSeat) {
+        alert("Silakan pilih kursi terlebih dahulu!");
+        return;
+      }
+      localStorage.setItem("kursiDipilih", selectedSeat.textContent);
+      alert("Kursi " + selectedSeat.textContent + " berhasil dipilih! Lanjut ke pembayaran.");
+      window.location.href = "pembayaran.html";
+    }
+  </script>
+</body>
+</html>

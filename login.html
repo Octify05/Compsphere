@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Login - KAI Inovasi</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #004aad, #ff6600);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .login-container {
+      background: #fff;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      animation: fadeIn 1s ease;
+    }
+
+    .login-container img {
+      height: 60px;
+      margin-bottom: 20px;
+    }
+
+    .login-container h2 {
+      margin-bottom: 20px;
+      color: #004aad;
+    }
+
+    .input-group {
+      text-align: left;
+      margin-bottom: 15px;
+    }
+
+    .input-group label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+
+    .input-group input:focus {
+      border-color: #ff6600;
+      outline: none;
+      box-shadow: 0 0 6px rgba(255, 102, 0, 0.5);
+    }
+
+    .btn-login {
+      width: 100%;
+      padding: 12px;
+      background: #ff6600;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn-login:hover {
+      background: #e65c00;
+    }
+
+    .extra-links {
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    .extra-links a {
+      color: #004aad;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .extra-links a:hover {
+      color: #ff6600;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <img src="logo kai.png" alt="Logo KAI">
+    <h2>Login ke Akun Anda</h2>
+    <form onsubmit="saveLoginData(event)">
+      <div class="input-group">
+        <label for="username">Nama Lengkap</label>
+        <input type="text" id="username" placeholder="Masukkan nama lengkap" required>
+      </div>
+      <div class="input-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Masukkan email" required>
+      </div>
+      <div class="input-group">
+        <label for="phone">No. HP</label>
+        <input type="tel" id="phone" placeholder="Masukkan nomor HP" required>
+      </div>
+      <div class="input-group">
+        <label for="password">Kata Sandi</label>
+        <input type="password" id="password" placeholder="Masukkan kata sandi" required>
+      </div>
+      <button type="submit" class="btn-login">Login</button>
+    </form>
+    
+    <!-- 🔗 Hyperlink tambahan -->
+    <div class="extra-links">
+      <p>Belum punya akun? <a href="register.html">Daftar di sini</a></p>
+      <p><a href="forgot-password.html">Lupa Password?</a></p>
+    </div>
+  </div>
+
+  <script>
+    function saveLoginData(e) {
+      e.preventDefault();
+      const userData = {
+        username: document.getElementById("username").value,
+        email: document.getElementById("email").value,
+        phone: document.getElementById("phone").value
+      };
+      localStorage.setItem("userData", JSON.stringify(userData));
+      alert("✅ Login berhasil! Data tersimpan.");
+      window.location.href = "booking.html"; // langsung ke booking
+    }
+  </script>
+</body>
+</html>

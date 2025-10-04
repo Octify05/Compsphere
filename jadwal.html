@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Jadwal Kereta - KAI Inovasi</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #004aad, #ff6600);
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    header {
+      background: white;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    header img { height: 50px; }
+    header nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #004aad;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    h2 {
+      text-align: center;
+      color: #004aad;
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background: linear-gradient(135deg, #004aad, #ff6600);
+      color: white;
+      font-size: 16px;
+    }
+
+    tr:hover {
+      background: #f1f1f1;
+      transition: 0.3s;
+    }
+
+    .btn {
+      background: #ff6600;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .btn:hover { background: #e65c00; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <header>
+    <img src="logo kai.png" alt="Logo KAI">
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="jadwal.html">Jadwal</a>
+      <a href="booking.html">Pesan Tiket</a>
+      <a href="tracking.html">Tracking</a>
+      <a href="login.html">Login</a>
+    </nav>
+  </header>
+
+  <!-- Jadwal -->
+  <div class="container">
+    <h2>📅 Jadwal Keberangkatan Kereta Api</h2>
+    <table>
+      <tr>
+        <th>Nama Kereta</th>
+        <th>Rute</th>
+        <th>Keberangkatan</th>
+        <th>Kedatangan</th>
+        <th>Kelas</th>
+        <th>Aksi</th>
+      </tr>
+      <!-- Argo Parahyangan -->
+      <tr>
+        <td>Argo Parahyangan</td>
+        <td>Gambir → Bandung</td>
+        <td>06:30</td>
+        <td>09:30</td>
+        <td>Ekonomi, Bisnis, Eksekutif</td>
+        <td><button class="btn" onclick="window.location.href='booking.html'">Pesan</button></td>
+      </tr>
+      <tr>
+        <td>Argo Parahyangan</td>
+        <td>Gambir → Bandung</td>
+        <td>12:00</td>
+        <td>15:00</td>
+        <td>Ekonomi, Bisnis, Eksekutif</td>
+        <td><button class="btn" onclick="window.location.href='booking.html'">Pesan</button></td>
+      </tr>
+      <tr>
+        <td>Argo Parahyangan</td>
+        <td>Bandung → Gambir</td>
+        <td>17:00</td>
+        <td>20:00</td>
+        <td>Ekonomi, Bisnis, Eksekutif</td>
+        <td><button class="btn" onclick="window.location.href='booking.html'">Pesan</button></td>
+      </tr>
+      <!-- Argo Wilis -->
+      <tr>
+        <td>Argo Wilis</td>
+        <td>Bandung → Surabaya Gubeng</td>
+        <td>07:00</td>
+        <td>19:00</td>
+        <td>Eksekutif</td>
+        <td><button class="btn" onclick="window.location.href='booking.html'">Pesan</button></td>
+      </tr>
+      <tr>
+        <td>Argo Wilis</td>
+        <td>Surabaya Gubeng → Bandung</td>
+        <td>08:00</td>
+        <td>20:00</td>
+        <td>Eksekutif</td>
+        <td><button class="btn" onclick="window.location.href='booking.html'">Pesan</button></td>
+      </tr>
+      <!-- Taksaka -->
+      <tr>
+        <td>Taksaka</td>
+        <td>Yogyakarta → Gambir</td>
+        <td>09:00</td>
+        <td>16:00</td>
+        <td>Ekonomi, Bisnis, Eksekutif</td>
+        <td><button class="btn" onclick="window.location.href='booking.html'">Pesan</button></td>
+      </tr>
+      <tr>
+        <td>Taksaka</td>
+        <td>Gambir → Yogyakarta</td>
+        <td>21:00</td>
+        <td>04:00</td>
+        <td>Ekonomi, Bisnis, Eksekutif</td>
+        <td><button class="btn" onclick="window.location.href='booking.html'">Pesan</button></td>
+      </tr>
+    </table>
+  </div>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Daftar Akun - KAI Inovasi</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #004aad, #ff6600);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .register-container {
+      background: #fff;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      width: 100%;
+      max-width: 450px;
+      text-align: center;
+      animation: fadeIn 1s ease;
+    }
+
+    .register-container img {
+      height: 60px;
+      margin-bottom: 20px;
+    }
+
+    .register-container h2 {
+      margin-bottom: 20px;
+      color: #004aad;
+    }
+
+    .input-group {
+      text-align: left;
+      margin-bottom: 15px;
+    }
+
+    .input-group label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+
+    .input-group input:focus {
+      border-color: #ff6600;
+      outline: none;
+      box-shadow: 0 0 6px rgba(255, 102, 0, 0.5);
+    }
+
+    .btn-register {
+      width: 100%;
+      padding: 12px;
+      background: #ff6600;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn-register:hover {
+      background: #e65c00;
+    }
+
+    .extra-links {
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    .extra-links a {
+      color: #004aad;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .extra-links a:hover {
+      color: #ff6600;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="register-container">
+    <img src="logo kai.png" alt="Logo KAI">
+    <h2>Buat Akun Baru</h2>
+    <form onsubmit="return registerUser()">
+      <div class="input-group">
+        <label for="nama">Nama Lengkap</label>
+        <input type="text" id="nama" placeholder="Masukkan nama lengkap" required>
+      </div>
+      <div class="input-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Masukkan email" required>
+      </div>
+      <div class="input-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" placeholder="Buat username" required>
+      </div>
+      <div class="input-group">
+        <label for="password">Kata Sandi</label>
+        <input type="password" id="password" placeholder="Buat kata sandi" required>
+      </div>
+      <div class="input-group">
+        <label for="confirm">Konfirmasi Kata Sandi</label>
+        <input type="password" id="confirm" placeholder="Ulangi kata sandi" required>
+      </div>
+      <button type="submit" class="btn-register">Daftar</button>
+    </form>
+    <div class="extra-links">
+      <p>Sudah punya akun? <a href="login.html">Login di sini</a></p>
+    </div>
+  </div>
+
+  <script>
+    function registerUser() {
+      const nama = document.getElementById("nama").value;
+      const email = document.getElementById("email").value;
+      const username = document.getElementById("username").value;
+      const pass = document.getElementById("password").value;
+      const confirm = document.getElementById("confirm").value;
+
+      if (pass !== confirm) {
+        alert("❌ Kata sandi tidak sama. Silakan coba lagi.");
+        return false;
+      }
+
+      alert("✅ Pendaftaran berhasil! Selamat datang, " + nama);
+      window.location.href = "login.html";
+      return false;
+    }
+  </script>
+</body>
+</html>

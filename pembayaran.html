@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Pembayaran Tiket - KAI Inovasi</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #004aad, #ff9800);
+      margin: 0; padding: 0;
+      color: #333;
+    }
+
+    header {
+      background: white;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    header img { height: 50px; }
+    header nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #004aad;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+
+    h2 {
+      text-align: center;
+      color: #004aad;
+      margin-bottom: 20px;
+    }
+
+    .detail {
+      background: #f9f9f9;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      border-left: 6px solid #004aad;
+    }
+
+    .detail p { margin: 8px 0; }
+
+    .total {
+      font-size: 20px;
+      font-weight: bold;
+      text-align: right;
+      color: #ff9800;
+      margin-top: 20px;
+    }
+
+    .btn {
+      background: #ff9800;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+      width: 100%;
+      margin-top: 20px;
+    }
+    .btn:hover { background: #e68900; }
+
+    .promo {
+      background: #fff3e0;
+      border: 2px dashed #ff9800;
+      padding: 15px;
+      margin-top: 20px;
+      border-radius: 10px;
+    }
+    .promo h3 { margin: 0 0 10px; color: #004aad; }
+    .promo p { margin: 5px 0; }
+
+    /* Tambahan untuk tabel penumpang */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+    th, td {
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background: #004aad;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <header>
+    <img src="logo kai.png" alt="Logo KAI">
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="jadwal.html">Jadwal</a>
+      <a href="booking.html">Pesan Tiket</a>
+      <a href="tracking.html">Tracking</a>
+      <a href="login.html">Login</a>
+    </nav>
+  </header>
+
+  <!-- Container -->
+  <div class="container">
+    <h2>💳 Pembayaran Tiket</h2>
+    <div class="detail" id="detailPesanan"></div>
+
+    <h3>👤 Data Penumpang</h3>
+    <table id="penumpangTable">
+      <tr>
+        <th>No</th>
+        <th>Nama</th>
+        <th>Email</th>
+        <th>No HP</th>
+      </tr>
+    </table>
+
+    <div class="promo">
+      <h3>🎉 Promo Berlaku</h3>
+      <p>1. Promo Silaturahmi Hari Raya (4–11 April) → Diskon 25%</p>
+      <p>2. Promo Natal & Tahun Baru (23 Des – 5 Jan) → Diskon 30%</p>
+      <p>3. Promo Tahun Baru (1–5 Jan) → Diskon 20%</p>
+    </div>
+
+    <div class="total" id="totalHarga"></div>
+    <button class="btn" onclick="lanjutkanPembayaran()">Konfirmasi & Bayar</button>
+  </div>
+
+  <script>
+    // Ambil data dari localStorage (diset di booking.html & denah)
+    let kereta = localStorage.getItem("keretaDipilih");
+    let kelas = localStorage.getItem("kelasDipilih");
+    let harga = parseInt(localStorage.getItem("hargaTiket")) || 0;
+    let kursi = localStorage.getItem("kursiDipilih") || "Belum dipilih";
+    let asal = localStorage.getItem("asal");
+    let tujuan = localStorage.getItem("tujuan");
+    let tanggal = localStorage.getItem("tanggal");
+    let jam = localStorage.getItem("jam");
+    let passengers = JSON.parse(localStorage.getItem("passengers")) || [];
+
+    // Hitung subtotal
+    let subtotal = harga * (passengers.length || 1);
+
+    // Tentukan promo sesuai tanggal
+    let total = subtotal;
+    let diskonText = "";
+    let tgl = new Date(tanggal);
+    let bulan = tgl.getMonth();  // Januari = 0
+    let hari = tgl.getDate();
+
+    // Promo Silaturahmi Hari Raya (4–11 April)
+    if (bulan === 3 && hari >= 4 && hari <= 11) {
+      total = subtotal * 0.75;
+      diskonText = "Diskon Silaturahmi Hari Raya 25%";
+    }
+    // Promo Natal & Tahun Baru (23 Des – 31 Des atau 1–5 Jan)
+    else if ((bulan === 11 && hari >= 23) || (bulan === 0 && hari <= 5)) {
+      total = subtotal * 0.7;
+      diskonText = "Promo Natal & Tahun Baru 30%";
+    }
+    // Promo Tahun Baru (khusus 1–5 Jan jika tidak kena promo di atas)
+    else if (bulan === 0 && hari <= 5) {
+      total = subtotal * 0.8;
+      diskonText = "Promo Tahun Baru 20%";
+    }
+
+    // Tampilkan detail pesanan
+    document.getElementById("detailPesanan").innerHTML = `
+      <p><b>Kereta:</b> ${kereta}</p>
+      <p><b>Rute:</b> ${asal} → ${tujuan}</p>
+      <p><b>Kelas:</b> ${kelas}</p>
+      <p><b>Kursi:</b> ${kursi}</p>
+      <p><b>Tanggal & Jam Berangkat:</b> ${tanggal} ${jam}</p>
+      <p><b>Harga per Tiket:</b> Rp ${harga.toLocaleString()}</p>
+      <p><b>Jumlah Penumpang:</b> ${passengers.length || 1} orang</p>
+      <p style="color:green;"><b>${diskonText}</b></p>
+    `;
+
+    // Isi tabel penumpang
+    const penumpangTable = document.getElementById("penumpangTable");
+    passengers.forEach((p, i) => {
+      penumpangTable.innerHTML += `
+        <tr>
+          <td>${i+1}</td>
+          <td>${p.name}</td>
+          <td>${p.email}</td>
+          <td>${p.phone}</td>
+        </tr>
+      `;
+    });
+
+    // Tampilkan total bayar
+    document.getElementById("totalHarga").innerText = "Total Bayar: Rp " + total.toLocaleString();
+
+    // Konfirmasi pembayaran
+    function lanjutkanPembayaran() {
+      localStorage.setItem("totalBayar", total);
+      window.location.href = "selesai.html";
+    }
+  </script>
+</body>
+</html>

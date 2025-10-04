@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body onload="loadDashboard()">
+  <header>
+    <h1>Dashboard KAI</h1>
+    <nav>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="jadwal.html">Jadwal</a>
+      <a href="booking.html">Pesan Tiket</a>
+      <a href="tracking.html">Tracking</a>
+      <a href="index.html" onclick="logout()">Logout</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h2>Halo, <span id="userDashboard"></span> 👋</h2>
+
+    <div class="dashboard">
+      <div class="card">
+        <h3>📅 Jadwal Kereta</h3>
+        <p>Lihat jadwal keberangkatan terbaru.</p>
+        <button onclick="window.location.href='jadwal.html'">Lihat</button>
+      </div>
+      <div class="card">
+        <h3>🎟️ Pesan Tiket</h3>
+        <p>Pesan tiket kereta cepat dan mudah.</p>
+        <button onclick="window.location.href='booking.html'">Pesan</button>
+      </div>
+      <div class="card">
+        <h3>🚆 Tracking Kereta</h3>
+        <p>Lacak posisi kereta secara real-time.</p>
+        <button onclick="window.location.href='tracking.html'">Tracking</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>© 2025 KAI Inovasi</footer>
+</body>
+</html>
